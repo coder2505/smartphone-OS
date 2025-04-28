@@ -1,3 +1,3 @@
 # mobile_os_2
 
-A new Flutter project.
+A mobile os app with many apps within it

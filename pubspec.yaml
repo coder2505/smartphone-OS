@@ -16,6 +16,8 @@ dependencies:
   record: ^6.0.0
   path: ^1.9.1
   just_audio: ^0.10.1
+  stylish_bottom_bar: ^1.1.1
+  flutter_analog_clock: ^1.0.3
 
 
 dev_dependencies:
@@ -25,5 +27,22 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: PlayfairDisplay
+      fonts:
+        - asset: lib/assets/fonts/PlayfairDisplay-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/PlayfairDisplay-Regular.ttf
+          style: normal
+
+    - family: Raleway
+      fonts:
+        - asset: lib/assets/fonts/Raleway-Regular.ttf
+          style: normal
+
+    - family: CalSans
+      fonts:
+        - asset: lib/assets/fonts/CalSans-Regular.ttf
+          style: normal
   assets:
     - lib/assets/images/

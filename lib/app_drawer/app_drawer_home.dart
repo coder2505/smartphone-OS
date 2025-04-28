@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_os_2/assets/utils/appicon.dart';
+import 'package:mobile_os_2/clock_app/appClockIcon.dart';
 
 class AppDrawerHome extends StatefulWidget {
   const AppDrawerHome({super.key});
@@ -18,8 +19,9 @@ class _AppDrawerHomeState extends State<AppDrawerHome> {
         child: GridView(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
+            crossAxisSpacing: 25,
           ),
-          children: [Appicon().appIconVoiceRecorder(context)],
+          children: [Appicon().appIconVoiceRecorder(context), Appclockicon()],
         ),
       ),
     );

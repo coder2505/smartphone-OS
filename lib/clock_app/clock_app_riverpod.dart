@@ -8,15 +8,10 @@ final stopwatchstartProvider = StateProvider<bool>((ref) {
   return false;
 });
 
-final timeHoursProvider = StateProvider<String>((ref) {
-  return '00';
+final stopwatchresetProvider = StateProvider<bool>((ref) {
+  return false;
 });
-final timeMinutesProvider = StateProvider<String>((ref) {
-  return '00';
-});
-final timeSecondsProvider = StateProvider<String>((ref) {
-  return '00';
-});
-final timeMilliSecondsProvider = StateProvider<String>((ref) {
-  return '00';
+
+final timeProvider = StateProvider<String>((ref) {
+  return '00:00:00';
 });

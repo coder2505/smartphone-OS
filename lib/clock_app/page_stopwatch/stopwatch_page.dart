@@ -16,39 +16,22 @@ class _StopwatchPageState extends ConsumerState<StopwatchPage> {
   @override
   Widget build(BuildContext context) {
     ref.watch(stopwatchstartProvider);
-    ref.watch(timeHoursProvider);
-    ref.watch(timeMinutesProvider);
-    ref.watch(timeMinutesProvider);
-    ref.watch(timeMilliSecondsProvider);
+    ref.watch(timeProvider);
+    ref.watch(stopwatchresetProvider);
 
     double width = MediaQuery.sizeOf(context).width;
 
     bool pressedStart = ref.read(stopwatchstartProvider.notifier).state;
-    String timeHours = ref.read(timeHoursProvider.notifier).state;
-    String timeMinutes = ref.read(timeMinutesProvider.notifier).state;
-    String timeSeconds = ref.read(timeSecondsProvider.notifier).state;
-    String timeMilliSeconds = ref.read(timeMilliSecondsProvider.notifier).state;
+    String time = ref.read(timeProvider.notifier).state;
 
     void startTime() {
       Global.stopwatch.start();
-      Global.timer = Timer.periodic(Duration(milliseconds: 1), (t) {
+      Global.timer = Timer.periodic(Duration(milliseconds: 10), (t) {
         if (Global.stopwatch.isRunning) {
           if (mounted) {
-            ref.read(timeMinutesProvider.notifier).state = Global
-                .stopwatch
-                .elapsed
+            ref.read(timeProvider.notifier).state = Global.stopwatch.elapsed
                 .toString()
-                .substring(2, 4);
-            ref.read(timeSecondsProvider.notifier).state = Global
-                .stopwatch
-                .elapsed
-                .toString()
-                .substring(5, 7);
-            ref.read(timeMilliSecondsProvider.notifier).state = Global
-                .stopwatch
-                .elapsed
-                .toString()
-                .substring(8, 10);
+                .substring(2, 10);
           }
         }
       });
@@ -59,55 +42,26 @@ class _StopwatchPageState extends ConsumerState<StopwatchPage> {
       Global.stopwatch.stop();
     }
 
+    void resetTime() {
+      Global.timer?.cancel();
+      Global.stopwatch.reset();
+      ref.read(timeProvider.notifier).state = '00:00:00';
+      ref.read(stopwatchstartProvider.notifier).state = false;
+    }
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          // THE STOPWATCH TIMER.
           SizedBox(
             child: Center(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(width: width * 0.2),
                   Text(
-                    timeMinutes,
+                    time,
                     style: TextStyle(
-                      backgroundColor: Colors.amber,
-                      fontFamily: 'CalSans',
-                      fontWeight: FontWeight.bold,
-                      fontSize: width * 0.15,
-                    ),
-                  ),
-                  Text(
-                    ':',
-                    style: TextStyle(
-                      backgroundColor: Colors.red,
-                      fontFamily: 'CalSans',
-                      fontWeight: FontWeight.bold,
-                      fontSize: width * 0.15,
-                    ),
-                  ),
-                  Text(
-                    timeSeconds,
-                    style: TextStyle(
-                      backgroundColor: Colors.amber,
-                      fontFamily: 'CalSans',
-                      fontWeight: FontWeight.bold,
-                      fontSize: width * 0.15,
-                    ),
-                  ),
-                  Text(
-                    ':',
-                    style: TextStyle(
-                      backgroundColor: Colors.red,
-                      fontFamily: 'CalSans',
-                      fontWeight: FontWeight.bold,
-                      fontSize: width * 0.15,
-                    ),
-                  ),
-                  Text(
-                    timeMilliSeconds,
-                    style: TextStyle(
-                      backgroundColor: Colors.amber,
                       fontFamily: 'CalSans',
                       fontWeight: FontWeight.bold,
                       fontSize: width * 0.15,
@@ -117,33 +71,161 @@ class _StopwatchPageState extends ConsumerState<StopwatchPage> {
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  if (pressedStart) {
-                    ref.read(stopwatchstartProvider.notifier).state = false;
-                    stopTime();
-                  } else {
-                    ref.read(stopwatchstartProvider.notifier).state = true;
-                    startTime();
-                  }
-                },
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.black,
-                  ),
-                  child: Icon(
-                    color: Colors.white,
-                    pressedStart ? Icons.pause : Icons.play_arrow,
-                  ),
-                ),
-              ),
-            ],
+
+          //THE STOP PLAY BUTTONS
+          AnimatedSwitcher(
+            duration: Duration(milliseconds: 250),
+            child:
+                ref.read(stopwatchresetProvider.notifier).state
+                    ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            ref.read(stopwatchresetProvider.notifier).state =
+                                false;
+
+                            resetTime();
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black,
+                            ),
+                            child: Icon(color: Colors.white, Icons.refresh),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (pressedStart) {
+                              ref.read(stopwatchstartProvider.notifier).state =
+                                  false;
+                              stopTime();
+                            } else {
+                              ref.read(stopwatchstartProvider.notifier).state =
+                                  true;
+                              startTime();
+                            }
+
+                            ref.read(stopwatchresetProvider.notifier).state =
+                                true;
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.black,
+                            ),
+                            child: Icon(
+                              color: Colors.white,
+                              pressedStart ? Icons.pause : Icons.play_arrow,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                    : GestureDetector(
+                      onTap: () {
+                        if (pressedStart) {
+                          ref.read(stopwatchstartProvider.notifier).state =
+                              false;
+                          stopTime();
+                        } else {
+                          ref.read(stopwatchstartProvider.notifier).state =
+                              true;
+                          startTime();
+                        }
+
+                        ref.read(stopwatchresetProvider.notifier).state = true;
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.black,
+                        ),
+                        child: Icon(
+                          color: Colors.white,
+                          pressedStart ? Icons.pause : Icons.play_arrow,
+                        ),
+                      ),
+                    ),
+
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     // RESET BUTTON
+            //     if (ref.read(stopwatchresetProvider.notifier).state) ...[
+            //       GestureDetector(
+            //         onTap: () {
+            //           resetTime();
+            //         },
+            //         child: Container(
+            //           width: 100,
+            //           height: 100,
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(20),
+            //             color: Colors.black,
+            //           ),
+            //           child: Icon(color: Colors.white, Icons.refresh),
+            //         ),
+            //       ),
+            //       // PLAY PAUSE
+            //       GestureDetector(
+            //         onTap: () {
+            //           if (pressedStart) {
+            //             ref.read(stopwatchstartProvider.notifier).state = false;
+            //             stopTime();
+            //           } else {
+            //             ref.read(stopwatchstartProvider.notifier).state = true;
+            //             startTime();
+            //           }
+            //           ref.read(stopwatchresetProvider.notifier).state = true;
+            //         },
+            //         child: Container(
+            //           width: 100,
+            //           height: 100,
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(20),
+            //             color: Colors.black,
+            //           ),
+            //           child: Icon(
+            //             color: Colors.white,
+            //             pressedStart ? Icons.pause : Icons.play_arrow,
+            //           ),
+            //         ),
+            //       ),
+            //     ] else
+            //       GestureDetector(
+            //         onTap: () {
+            //           if (pressedStart) {
+            //             ref.read(stopwatchstartProvider.notifier).state = false;
+            //             stopTime();
+            //           } else {
+            //             ref.read(stopwatchstartProvider.notifier).state = true;
+            //             startTime();
+            //           }
+            //           ref.read(stopwatchresetProvider.notifier).state = true;
+            //         },
+            //         child: Container(
+            //           width: 100,
+            //           height: 100,
+            //           decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(20),
+            //             color: Colors.black,
+            //           ),
+            //           child: Icon(
+            //             color: Colors.white,
+            //             pressedStart ? Icons.pause : Icons.play_arrow,
+            //           ),
+            //         ),
+            //       ),
+            //   ],
+            // ),
           ),
         ],
       ),

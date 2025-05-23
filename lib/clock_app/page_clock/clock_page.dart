@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
+import 'package:intl/intl.dart';
 
 class ClockPage extends StatefulWidget {
   const ClockPage({super.key});
@@ -12,7 +13,8 @@ class _ClockPageState extends State<ClockPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
+    DateTime time = DateTime.now();
 
     AnalogClock clock = AnalogClock.dark(
       hourNumbers: [],
@@ -42,7 +44,8 @@ class _ClockPageState extends State<ClockPage> {
                   Icon(Icons.location_on_rounded),
                   SizedBox(width: 10),
                   Text(
-                    "India",
+                    // "India",
+                    time.timeZoneName,
                     style: TextStyle(
                       fontFamily: 'PlayfairDisplay',
                       fontWeight: FontWeight.bold,
@@ -62,16 +65,18 @@ class _ClockPageState extends State<ClockPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "Monday, 28 April 2025",
+                    // "Monday, 28 April 2025",
+                    DateFormat.yMMMMEEEEd().format(time),
                     style: TextStyle(
                       color: const Color.fromARGB(255, 92, 92, 92),
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'PlayfairDisplay',
+                      fontFamily: 'CalSans',
                     ),
                   ),
                   Text(
-                    "10:08 PM",
+                    //10:30 PM
+                    DateFormat("hh:mm a").format(time),
                     style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,

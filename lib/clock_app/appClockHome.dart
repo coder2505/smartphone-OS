@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_os_2/clock_app/clock_app_riverpod.dart';
 import 'package:mobile_os_2/clock_app/page_clock/clock_page.dart';
+import 'package:mobile_os_2/clock_app/page_stopwatch/stopwatch_page.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class Appclockhome extends ConsumerStatefulWidget {
@@ -17,7 +18,7 @@ class _AppclockhomeState extends ConsumerState<Appclockhome> {
   List pages = [
     Center(child: Text("1")),
     Center(child: ClockPage()),
-    Center(child: Text("3")),
+    Center(child: StopwatchPage()),
   ];
 
   @override
@@ -32,9 +33,21 @@ class _AppclockhomeState extends ConsumerState<Appclockhome> {
       bottomNavigationBar: StylishBottomBar(
         backgroundColor: Colors.transparent,
         items: [
-          BottomBarItem(icon: Icon(Icons.alarm), title: Text("Alarm")),
-          BottomBarItem(icon: Icon(Icons.watch), title: Text("Clock")),
-          BottomBarItem(icon: Icon(Icons.timer), title: Text("Stopwatch")),
+          BottomBarItem(
+            icon: Icon(Icons.alarm, color: Colors.black),
+            title: Text("Alarm"),
+            selectedColor: Colors.black,
+          ),
+          BottomBarItem(
+            icon: Icon(Icons.watch, color: Colors.black),
+            title: Text("Clock"),
+            selectedColor: Colors.black,
+          ),
+          BottomBarItem(
+            icon: Icon(Icons.timer_outlined, color: Colors.black),
+            title: Text("Stopwatch"),
+            selectedColor: Colors.black,
+          ),
         ],
         option: AnimatedBarOptions(
           barAnimation: BarAnimation.blink,

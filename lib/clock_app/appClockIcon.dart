@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mobile_os_2/clock_app/appClockHome.dart';
 import 'package:page_transition/page_transition.dart';
 

@@ -5,7 +5,7 @@ import 'package:bottom_picker/bottom_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_os_2/clock_app/page_alarms/savetoDB.dart';
+import 'package:mobile_os_2/clock_app/page_alarms/DBchanges.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AlarmSet {
@@ -52,7 +52,7 @@ class AlarmSet {
                 prefs.setInt("alarmId", id + 1);
               }
 
-              await Savetodb().saveAlarm(id ?? 0, dateTime, ref);
+              await Dbchanges().saveAlarm(id ?? 0, dateTime, ref);
               setalarm(id ?? 0, dateTime, alarmPath);
             },
           ),

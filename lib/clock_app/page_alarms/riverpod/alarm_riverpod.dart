@@ -6,6 +6,14 @@ class AlarmRiverpod extends StateNotifier<List<Map>> {
   void addData(Map data) {
     state = [...state, data];
   }
+
+  void updateisON(bool val, int index) {
+    final updatedList = List<Map>.from(state);
+
+    updatedList[index] = Map<String, dynamic>.from(updatedList[index]);
+    updatedList[index]['isON'] = val;
+    state = updatedList;
+  }
 }
 
 final alarmDataProvider = StateNotifierProvider<AlarmRiverpod, List<Map>>((

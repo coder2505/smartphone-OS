@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_os_2/clock_app/clock_app_riverpod.dart';
+import 'package:mobile_os_2/clock_app/page_alarms/alarm_homepage.dart';
 import 'package:mobile_os_2/clock_app/page_clock/clock_page.dart';
 import 'package:mobile_os_2/clock_app/page_stopwatch/stopwatch_page.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -16,7 +17,7 @@ class _AppclockhomeState extends ConsumerState<Appclockhome> {
   int selected = 1;
 
   List pages = [
-    Center(child: Text("1")),
+    Center(child: AlarmHomepage()),
     Center(child: ClockPage()),
     Center(child: StopwatchPage()),
   ];

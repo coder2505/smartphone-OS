@@ -14,6 +14,12 @@ class AlarmRiverpod extends StateNotifier<List<Map>> {
     updatedList[index]['isON'] = val;
     state = updatedList;
   }
+
+  void deleteAlarm(int index) {
+    final updatedList = List<Map>.from(state);
+    updatedList.removeAt(index);
+    state = updatedList;
+  }
 }
 
 final alarmDataProvider = StateNotifierProvider<AlarmRiverpod, List<Map>>((

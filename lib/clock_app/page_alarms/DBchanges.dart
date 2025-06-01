@@ -33,4 +33,13 @@ class Dbchanges {
       rethrow;
     }
   }
+
+  Future<void> deleteAlarm(int id, int index, WidgetRef ref) async {
+    ref.read(alarmDataProvider.notifier).deleteAlarm(index);
+
+    await FirebaseFirestore.instance
+        .collection("alarms")
+        .doc(id.toString())
+        .delete();
+  }
 }

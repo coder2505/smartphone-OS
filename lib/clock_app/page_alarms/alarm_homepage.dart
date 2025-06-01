@@ -14,6 +14,7 @@ class AlarmHomepage extends ConsumerStatefulWidget {
 
 class _AlarmHomepageState extends ConsumerState<AlarmHomepage> {
   List? timeStamp;
+  Set selectedItems = {};
 
   @override
   void initState() {
@@ -24,28 +25,47 @@ class _AlarmHomepageState extends ConsumerState<AlarmHomepage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
     double width = MediaQuery.sizeOf(context).width;
-
     final alarmList = ref.watch(alarmDataProvider);
 
     return Scaffold(
       body: ListView.builder(
         itemCount: alarmList.length,
         itemBuilder: (context, index) {
+          bool isSelected = selectedItems.contains(index);
           return Padding(
             padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
             child: GestureDetector(
               onLongPress: () {
-                
-
+                setState(() {
+                  if (isSelected) {
+                    selectedItems.remove(index);
+                  } else {
+                    selectedItems.add(index);
+                  }
+                });
               },
 
-              child: Container(
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+
                 height: height * 0.15,
                 width: width,
+
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(227, 255, 255, 255),
+                  color:
+                      isSelected
+                          ? const Color.fromARGB(93, 0, 0, 0)
+                          : Color.fromARGB(227, 255, 255, 255),
                   border: Border.all(color: const Color.fromARGB(210, 0, 0, 0)),
                   borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color.fromARGB(93, 0, 0, 0), // shadow color
+                      spreadRadius: 2, // how wide the shadow spreads
+                      blurRadius: 8, // how blurry the shadow is
+                      offset: Offset(0, 4), // position of shadow: (x, y)
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
@@ -87,29 +107,46 @@ class _AlarmHomepageState extends ConsumerState<AlarmHomepage> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Center(
-                            child: Switch(
-                              value: alarmList[index]["isON"],
-                              activeColor: Colors.black,
-                              onChanged: (bool value) {
-                                print(index);
-                                Dbchanges().changeIsOn(
-                                  alarmList[index]['id'],
-                                  value,
-                                  index,
-                                  ref,
-                                );
-                              },
+                    isSelected
+                        ? Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Dbchanges().deleteAlarm(
+                                alarmList[index]['id'],
+                                index,
+                                ref,
+                              );
+                              selectedItems.remove(index);
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              size: 32,
+                              color: const Color.fromARGB(255, 188, 0, 0),
+                            ),
+                          ),
+                        )
+                        : Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Center(
+                                child: Switch(
+                                  value: alarmList[index]["isON"],
+                                  activeColor: Colors.black,
+                                  onChanged: (bool value) {
+                                    Dbchanges().changeIsOn(
+                                      alarmList[index]['id'],
+                                      value,
+                                      index,
+                                      ref,
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
                   ],
                 ),
               ),

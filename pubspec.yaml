@@ -25,6 +25,7 @@ dependencies:
   alarm: ^5.1.3
   shared_preferences: ^2.5.3
   flutter_dotenv: ^5.2.1
+  animations: ^2.0.11
 
 
 dev_dependencies:

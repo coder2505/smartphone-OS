@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_os_2/reminder_app/services/onsubmit_note.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNewReminder {
   void addReminder(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
 
+    final TextEditingController titleText = TextEditingController();
+    final TextEditingController notes = TextEditingController();
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: height * 0.9,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
@@ -20,7 +25,9 @@ class AddNewReminder {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         "Cancel",
                         style: TextStyle(
@@ -43,7 +50,24 @@ class AddNewReminder {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        int? id = prefs.getInt("reminderId");
+
+                        if (id == null) {
+                          prefs.setInt("reminderId", 0);
+                        } else {
+                          prefs.setInt("reminderId", id + 1);
+                        }
+                        await OnsubmitNote().onSubmit(
+                          titleText.text,
+                          notes.text,
+                          id ?? 0,
+                          context
+                        );
+
+                      },
                       child: Text(
                         "Add",
                         style: TextStyle(
@@ -57,6 +81,7 @@ class AddNewReminder {
                 Column(
                   children: [
                     CupertinoTextField(
+                      controller: titleText,
                       padding: EdgeInsetsGeometry.all(10),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -76,6 +101,7 @@ class AddNewReminder {
                       ),
                     ),
                     CupertinoTextField(
+                      controller: notes,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -114,7 +140,7 @@ class AddNewReminder {
                     ),
                   ),
                 ),
-                
+
                 Container(
                   height: 50,
                   decoration: BoxDecoration(
@@ -158,7 +184,6 @@ class AddNewReminder {
                     ),
                   ),
                 ),
-              
               ],
             ),
           ),

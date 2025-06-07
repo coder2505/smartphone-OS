@@ -114,6 +114,7 @@ class AddNewReminder {
                     ),
                   ),
                 ),
+                
                 Container(
                   height: 50,
                   decoration: BoxDecoration(
@@ -157,6 +158,7 @@ class AddNewReminder {
                     ),
                   ),
                 ),
+              
               ],
             ),
           ),

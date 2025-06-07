@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_os_2/reminder_app/add_new_reminder.dart';
+import 'package:mobile_os_2/reminder_app/reminder_home_body_1.dart';
 
 class ReminderAppHome extends StatefulWidget {
   const ReminderAppHome({super.key});
@@ -12,6 +13,7 @@ class _ReminderAppHomeState extends State<ReminderAppHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: ReminderHomeBody(),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
         child: Row(

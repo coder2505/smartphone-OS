@@ -1,15 +1,15 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_os_2/calendar_app/calendar_home.dart';
+import 'package:mobile_os_2/reminder_app/reminder_app_home.dart';
 
-class CalendarAppIcon extends StatefulWidget {
-  const CalendarAppIcon({super.key});
+class ReminderAppIcon extends StatefulWidget {
+  const ReminderAppIcon({super.key});
 
   @override
-  State<CalendarAppIcon> createState() => _CalendarAppIconState();
+  State<ReminderAppIcon> createState() => _ReminderAppIconState();
 }
 
-class _CalendarAppIconState extends State<CalendarAppIcon> {
+class _ReminderAppIconState extends State<ReminderAppIcon> {
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
@@ -27,7 +27,7 @@ class _CalendarAppIconState extends State<CalendarAppIcon> {
         BuildContext context,
         void Function({Object? returnValue}) action,
       ) {
-        return CalendarHome();
+        return ReminderAppHome();
       },
     );
   }

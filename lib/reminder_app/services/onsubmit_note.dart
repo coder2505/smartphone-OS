@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_os_2/reminder_app/db/provider_setup.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/provider_setup.dart';
 
 class OnsubmitNote {
   Future<void> onSubmit(
@@ -17,6 +17,7 @@ class OnsubmitNote {
           'id': id,
           'Titles': title,
           'Notes': notes,
+          'isCompleted': false,
         });
 
         if (context.mounted) Navigator.pop(context);
@@ -24,7 +25,12 @@ class OnsubmitNote {
         await FirebaseFirestore.instance
             .collection('reminders')
             .doc(id.toString())
-            .set({'id': id, 'Titles': title, 'Notes': notes});
+            .set({
+              'id': id,
+              'Titles': title,
+              'Notes': notes,
+              'isCompleted': false,
+            });
       } else {
         if (context.mounted) Navigator.pop(context);
 

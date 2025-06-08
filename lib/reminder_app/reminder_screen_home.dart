@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_os_2/reminder_app/add_new_reminder.dart';
-import 'package:mobile_os_2/reminder_app/reminder_home_body_1.dart';
+import 'package:mobile_os_2/reminder_app/reminder_screen_body_1.dart';
 
 class ReminderAppHome extends ConsumerStatefulWidget {
   const ReminderAppHome({super.key});

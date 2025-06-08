@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_os_2/reminder_app/db/provider_setup.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/provider_not_for_db.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/provider_setup.dart';
+import 'package:mobile_os_2/reminder_app/services/DBchanges.dart';
 
 class RemindersPageHome extends ConsumerStatefulWidget {
   const RemindersPageHome({super.key});
@@ -15,6 +17,9 @@ class _RemindersPageHomeState extends ConsumerState<RemindersPageHome> {
   @override
   Widget build(BuildContext context) {
     ref.watch(databaseReminderProvider);
+    ref.watch(checkboxProvider);
+
+    Set set = ref.read(checkboxProvider.notifier).getSet();
 
     return Scaffold(
       appBar: AppBar(),
@@ -45,17 +50,28 @@ class _RemindersPageHomeState extends ConsumerState<RemindersPageHome> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadiusGeometry.circular(10),
                         ),
-                        value: list.contains(index),
+
+                        value: set.contains(index),
+
                         activeColor: Colors.blueAccent,
-                        onChanged: (bool? value) {
-                          if (list.contains(index)) {
-                            setState(() {
-                              list.remove(index);
-                            });
+                        onChanged: (bool? value) async {
+                          int id =
+                              ref.read(databaseReminderProvider)[index]['id'];
+                          ref.read(checkboxProvider.notifier).add(index);
+                          if (set.contains(index)) {
+                            DbChangesReminder().isCompleted(
+                              index,
+                              id,
+                              true,
+                              ref,
+                            );
                           } else {
-                            setState(() {
-                              list.add(index);
-                            });
+                            DbChangesReminder().isCompleted(
+                              index,
+                              id,
+                              false,
+                              ref,
+                            );
                           }
                         },
                       ),

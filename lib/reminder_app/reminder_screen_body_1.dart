@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_os_2/reminder_app/db/provider_setup.dart';
-import 'package:mobile_os_2/reminder_app/reminder_app_home.dart';
-import 'package:mobile_os_2/reminder_app/reminders_page_home.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/provider_setup.dart';
+import 'package:mobile_os_2/reminder_app/reminder_screen_home.dart';
+import 'package:mobile_os_2/reminder_app/reminders_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ReminderHomeBody extends ConsumerStatefulWidget {

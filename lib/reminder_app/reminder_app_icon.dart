@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_os_2/reminder_app/reminder_app_home.dart';
+import 'package:mobile_os_2/reminder_app/reminder_screen_home.dart';
 
 class ReminderAppIcon extends StatefulWidget {
   const ReminderAppIcon({super.key});

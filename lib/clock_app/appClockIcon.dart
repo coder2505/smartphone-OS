@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_os_2/clock_app/appClockHome.dart';
-import 'package:page_transition/page_transition.dart';
 
 class Appclockicon extends StatefulWidget {
   const Appclockicon({super.key});

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_os_2/assets/utils/appicon.dart';
+import 'package:mobile_os_2/reminder_app/db/loadDataReminder.dart';
 import 'package:mobile_os_2/reminder_app/reminder_app_icon.dart';
 import 'package:mobile_os_2/clock_app/appClockIcon.dart';
 import 'package:mobile_os_2/clock_app/page_alarms/services/loaddata.dart';
@@ -17,6 +18,7 @@ class _AppDrawerHomeState extends ConsumerState<AppDrawerHome> {
   void initState() {
     super.initState();
     Loaddata().loadData(ref);
+    Loaddatareminder().loadData(ref);
   }
 
   @override

@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_os_2/reminder_app/services/onsubmit_note.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNewReminder {
-  void addReminder(BuildContext context) {
+  void addReminder(BuildContext context, WidgetRef ref) {
     double height = MediaQuery.sizeOf(context).height;
 
     final TextEditingController titleText = TextEditingController();
@@ -64,9 +65,9 @@ class AddNewReminder {
                           titleText.text,
                           notes.text,
                           id ?? 0,
-                          context
+                          context,
+                          ref,
                         );
-
                       },
                       child: Text(
                         "Add",

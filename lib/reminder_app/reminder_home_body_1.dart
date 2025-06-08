@@ -1,17 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_os_2/reminder_app/db/provider_setup.dart';
+import 'package:mobile_os_2/reminder_app/reminder_app_home.dart';
+import 'package:mobile_os_2/reminder_app/reminders_page_home.dart';
+import 'package:page_transition/page_transition.dart';
 
-class ReminderHomeBody extends StatefulWidget {
+class ReminderHomeBody extends ConsumerStatefulWidget {
   const ReminderHomeBody({super.key});
 
   @override
-  State<ReminderHomeBody> createState() => _ReminderHomeBodyState();
+  ConsumerState<ReminderHomeBody> createState() => _ReminderHomeBodyState();
 }
 
-class _ReminderHomeBodyState extends State<ReminderHomeBody> {
+class _ReminderHomeBodyState extends ConsumerState<ReminderHomeBody> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
+    ref.watch(databaseReminderProvider);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 244, 244),
@@ -162,7 +168,10 @@ class _ReminderHomeBodyState extends State<ReminderHomeBody> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                "0",
+                                ref
+                                    .read(databaseReminderProvider.notifier)
+                                    .length()
+                                    .toString(),
                                 style: TextStyle(
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
@@ -226,34 +235,49 @@ class _ReminderHomeBodyState extends State<ReminderHomeBody> {
               ],
             ),
             SizedBox(height: 32),
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 4, 16, 4),
-                child: Row(
-                  spacing: 10,
-                  children: [
-                    Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(100),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: RemindersPageHome(),
+                    type: PageTransitionType.leftToRight,
+                    curve: Curves.easeIn,
+                  ),
+                );
+              },
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 4, 16, 4),
+                  child: Row(
+                    spacing: 10,
+                    children: [
+                      Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Icon(Icons.list_rounded, color: Colors.white),
                       ),
-                      child: Icon(Icons.list_rounded, color: Colors.white),
-                    ),
-                    Text("Reminders"),
-                    Expanded(child: SizedBox()),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Row(
+                      Text("Reminders"),
+                      Expanded(child: SizedBox()),
+                      Row(
                         spacing: 10,
                         children: [
-                          Text("1", style: TextStyle(color: Colors.grey)),
+                          Text(
+                            ref
+                                .read(databaseReminderProvider.notifier)
+                                .length()
+                                .toString(),
+                            style: TextStyle(color: Colors.grey),
+                          ),
                           Icon(
                             Icons.arrow_forward_ios,
                             size: 16,
@@ -261,8 +285,8 @@ class _ReminderHomeBodyState extends State<ReminderHomeBody> {
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

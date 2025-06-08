@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_os_2/reminder_app/db/provider_setup.dart';
 
 class OnsubmitNote {
   Future<void> onSubmit(
@@ -8,15 +9,22 @@ class OnsubmitNote {
     String notes,
     int id,
     BuildContext context,
+    WidgetRef ref,
   ) async {
     try {
       if (title != '' && notes != '') {
+        ref.read(databaseReminderProvider.notifier).addData({
+          'id': id,
+          'Titles': title,
+          'Notes': notes,
+        });
+
+        if (context.mounted) Navigator.pop(context);
+
         await FirebaseFirestore.instance
             .collection('reminders')
             .doc(id.toString())
             .set({'id': id, 'Titles': title, 'Notes': notes});
-
-        if (context.mounted) Navigator.pop(context);
       } else {
         if (context.mounted) Navigator.pop(context);
 

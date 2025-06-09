@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_os_2/reminder_app/completed_page.dart';
 import 'package:mobile_os_2/reminder_app/riverpod/allReminders.dart';
 import 'package:mobile_os_2/reminder_app/reminders_page.dart';
 import 'package:mobile_os_2/reminder_app/riverpod/completedReminders.dart';
@@ -186,54 +187,66 @@ class _ReminderHomeBodyState extends ConsumerState<ReminderHomeBody> {
                     ),
                   ),
                 ),
-                Container(
-                  width: width / 2.25,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 0),
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 75,
-                              child: Center(
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blueGrey,
-                                    borderRadius: BorderRadius.circular(50),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        child: CompletedPage(),
+                        type: PageTransitionType.rightToLeft,
+                        curve: Curves.easeIn,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: width / 2.25,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 0),
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 75,
+                                child: Center(
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blueGrey,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: Icon(Icons.check),
                                   ),
-                                  child: Icon(Icons.check),
                                 ),
                               ),
-                            ),
-                            Text("Completed"),
-                          ],
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                ref
-                                    .read(completedRemindersProvider.notifier)
-                                    .length()
-                                    .toString(),
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
+                              Text("Completed"),
+                            ],
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  ref
+                                      .read(completedRemindersProvider.notifier)
+                                      .length()
+                                      .toString(),
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -246,7 +259,7 @@ class _ReminderHomeBodyState extends ConsumerState<ReminderHomeBody> {
                   context,
                   PageTransition(
                     child: RemindersPageHome(),
-                    type: PageTransitionType.leftToRight,
+                    type: PageTransitionType.rightToLeft,
                     curve: Curves.easeIn,
                   ),
                 );

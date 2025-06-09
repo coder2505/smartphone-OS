@@ -17,11 +17,10 @@ class DbChangesReminder {
 
         ref.read(checkboxProvider.notifier).add(index);
         Timer(const Duration(seconds: 2), () {
+          ref.read(allRemindersProviders.notifier).hasCompleted(true, id);
           ref.read(checkboxProvider.notifier).remove(index);
-          ref.read(incompleteremindersProviders.notifier).removeData(index);
-          ref.read(allRemindersProviders.notifier).hasCompleted(value, index);
+          ref.read(incompleteremindersProviders.notifier).removeData(id);
         });
-        print(id);
         await FirebaseFirestore.instance
             .collection("reminders")
             .doc(id.toString())

@@ -7,7 +7,13 @@ class ProviderSetup extends StateNotifier<List<Map>> {
     state = [...state, data];
   }
 
-  void hasCompleted(bool val, int index) {
+  void hasCompleted(bool val, int id) {
+    int index = 0;
+    for (Map map in state) {
+      if (map['id'] == id) break;
+      index++;
+    }
+
     final updatedList = List<Map>.from(state);
 
     updatedList[index] = Map<String, dynamic>.from(updatedList[index]);

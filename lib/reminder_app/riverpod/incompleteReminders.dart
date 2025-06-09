@@ -7,7 +7,13 @@ class Incompletereminders extends StateNotifier<List<Map>> {
     state = [...state, data];
   }
 
-  void removeData(int index) {
+  void removeData(int id) {
+    int index = 0;
+    for (Map map in state) {
+      if (map['id'] == id) break;
+      index++;
+    }
+
     if (index >= 0 && index < state.length) {
       final newList = [...state]..removeAt(index);
       state = newList;

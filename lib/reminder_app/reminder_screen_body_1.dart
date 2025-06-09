@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_os_2/reminder_app/pages/allreminders_page.dart';
 import 'package:mobile_os_2/reminder_app/pages/completed_page.dart';
 import 'package:mobile_os_2/reminder_app/riverpod/allReminders.dart';
 import 'package:mobile_os_2/reminder_app/pages/reminders_page.dart';
@@ -136,54 +137,69 @@ class _ReminderHomeBodyState extends ConsumerState<ReminderHomeBody> {
             Row(
               spacing: 10,
               children: [
-                Container(
-                  width: width / 2.25,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 0),
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 75,
-                              child: Center(
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(50),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        child: AllremindersPage(),
+                        type: PageTransitionType.rightToLeft,
+                        curve: Curves.easeIn,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: width / 2.25,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 0),
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 75,
+                                child: Center(
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: Icon(
+                                      Icons.inbox,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                  child: Icon(Icons.inbox, color: Colors.white),
                                 ),
                               ),
-                            ),
-                            Text("All"),
-                          ],
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                ref
-                                    .read(allRemindersProviders.notifier)
-                                    .length()
-                                    .toString(),
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
+                              Text("All"),
+                            ],
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  ref
+                                      .read(allRemindersProviders.notifier)
+                                      .length()
+                                      .toString(),
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

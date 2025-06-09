@@ -24,7 +24,8 @@ class ProviderSetup extends StateNotifier<List<Map>> {
   }
 }
 
-final databaseReminderProvider =
-    StateNotifierProvider<ProviderSetup, List<Map>>((ref) {
-      return ProviderSetup();
-    });
+final allRemindersProviders = StateNotifierProvider<ProviderSetup, List<Map>>((
+  ref,
+) {
+  return ProviderSetup();
+});

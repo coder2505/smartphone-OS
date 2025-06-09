@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_os_2/reminder_app/riverpod/provider_setup.dart';
-import 'package:mobile_os_2/reminder_app/reminder_screen_home.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/allReminders.dart';
 import 'package:mobile_os_2/reminder_app/reminders_page.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/completedReminders.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/incompleteReminders.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ReminderHomeBody extends ConsumerStatefulWidget {
@@ -17,7 +18,8 @@ class _ReminderHomeBodyState extends ConsumerState<ReminderHomeBody> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
-    ref.watch(databaseReminderProvider);
+    ref.watch(allRemindersProviders);
+    ref.watch(completedRemindersProvider);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 244, 244),
@@ -169,7 +171,7 @@ class _ReminderHomeBodyState extends ConsumerState<ReminderHomeBody> {
                               alignment: Alignment.centerRight,
                               child: Text(
                                 ref
-                                    .read(databaseReminderProvider.notifier)
+                                    .read(allRemindersProviders.notifier)
                                     .length()
                                     .toString(),
                                 style: TextStyle(
@@ -219,7 +221,10 @@ class _ReminderHomeBodyState extends ConsumerState<ReminderHomeBody> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                "0",
+                                ref
+                                    .read(completedRemindersProvider.notifier)
+                                    .length()
+                                    .toString(),
                                 style: TextStyle(
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
@@ -273,7 +278,7 @@ class _ReminderHomeBodyState extends ConsumerState<ReminderHomeBody> {
                         children: [
                           Text(
                             ref
-                                .read(databaseReminderProvider.notifier)
+                                .read(incompleteremindersProviders.notifier)
                                 .length()
                                 .toString(),
                             style: TextStyle(color: Colors.grey),

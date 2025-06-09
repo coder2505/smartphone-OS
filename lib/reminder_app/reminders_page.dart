@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/incompleteReminders.dart';
 import 'package:mobile_os_2/reminder_app/riverpod/provider_not_for_db.dart';
-import 'package:mobile_os_2/reminder_app/riverpod/provider_setup.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/allReminders.dart';
 import 'package:mobile_os_2/reminder_app/services/DBchanges.dart';
 
 class RemindersPageHome extends ConsumerStatefulWidget {
@@ -16,8 +17,9 @@ class _RemindersPageHomeState extends ConsumerState<RemindersPageHome> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(databaseReminderProvider);
+    ref.watch(allRemindersProviders);
     ref.watch(checkboxProvider);
+    ref.watch(incompleteremindersProviders);
 
     Set set = ref.read(checkboxProvider.notifier).getSet();
 
@@ -34,7 +36,8 @@ class _RemindersPageHomeState extends ConsumerState<RemindersPageHome> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: ref.read(databaseReminderProvider.notifier).length(),
+              itemCount:
+                  ref.read(incompleteremindersProviders.notifier).length(),
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   decoration: BoxDecoration(
@@ -56,7 +59,9 @@ class _RemindersPageHomeState extends ConsumerState<RemindersPageHome> {
                         activeColor: Colors.blueAccent,
                         onChanged: (bool? value) async {
                           int id =
-                              ref.read(databaseReminderProvider)[index]['id'];
+                              ref.read(
+                                incompleteremindersProviders,
+                              )[index]['id'];
                           ref.read(checkboxProvider.notifier).add(index);
                           if (set.contains(index)) {
                             DbChangesReminder().isCompleted(
@@ -82,7 +87,7 @@ class _RemindersPageHomeState extends ConsumerState<RemindersPageHome> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 ref.read(
-                                  databaseReminderProvider,
+                                  incompleteremindersProviders,
                                 )[index]['Titles'],
                               ),
                             ),
@@ -90,7 +95,7 @@ class _RemindersPageHomeState extends ConsumerState<RemindersPageHome> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 ref.read(
-                                  databaseReminderProvider,
+                                  incompleteremindersProviders,
                                 )[index]['Notes'],
                                 overflow: TextOverflow.fade,
                               ),

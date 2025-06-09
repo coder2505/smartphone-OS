@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_os_2/reminder_app/riverpod/provider_setup.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/allReminders.dart';
+import 'package:mobile_os_2/reminder_app/riverpod/incompleteReminders.dart';
 
 class OnsubmitNote {
   Future<void> onSubmit(
@@ -13,7 +14,14 @@ class OnsubmitNote {
   ) async {
     try {
       if (title != '' && notes != '') {
-        ref.read(databaseReminderProvider.notifier).addData({
+        ref.read(allRemindersProviders.notifier).addData({
+          'id': id,
+          'Titles': title,
+          'Notes': notes,
+          'isCompleted': false,
+        });
+
+        ref.read(incompleteremindersProviders.notifier).addData({
           'id': id,
           'Titles': title,
           'Notes': notes,

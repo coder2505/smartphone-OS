@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_os_2/reminder_app/completed_page.dart';
+import 'package:mobile_os_2/reminder_app/pages/completed_page.dart';
 import 'package:mobile_os_2/reminder_app/riverpod/allReminders.dart';
-import 'package:mobile_os_2/reminder_app/reminders_page.dart';
+import 'package:mobile_os_2/reminder_app/pages/reminders_page.dart';
 import 'package:mobile_os_2/reminder_app/riverpod/completedReminders.dart';
 import 'package:mobile_os_2/reminder_app/riverpod/incompleteReminders.dart';
 import 'package:page_transition/page_transition.dart';

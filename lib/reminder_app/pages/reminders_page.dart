@@ -100,6 +100,21 @@ class _RemindersPageHomeState extends ConsumerState<RemindersPageHome> {
                                 overflow: TextOverflow.fade,
                               ),
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child:
+                                  ref.read(
+                                            incompleteremindersProviders,
+                                          )[index]['Date'] ==
+                                          ""
+                                      ? SizedBox.shrink()
+                                      : Text(
+                                        ref.read(
+                                          incompleteremindersProviders,
+                                        )[index]['Date'],
+                                        overflow: TextOverflow.fade,
+                                      ),
+                            ),
                           ],
                         ),
                       ),

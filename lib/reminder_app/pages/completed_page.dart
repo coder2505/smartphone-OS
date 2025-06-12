@@ -80,6 +80,24 @@ class _CompletedPageState extends ConsumerState<CompletedPage> {
                                 ),
                               ),
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child:
+                                  ref.read(
+                                            completedRemindersProvider,
+                                          )[index]['Date'] ==
+                                          ""
+                                      ? SizedBox.shrink()
+                                      : Text(
+                                        ref.read(
+                                          completedRemindersProvider,
+                                        )[index]['Date'],
+                                        overflow: TextOverflow.fade,
+                                        style: TextStyle(
+                                          color: Colors.blueGrey,
+                                        ),
+                                      ),
+                            ),
                           ],
                         ),
                       ),

@@ -101,6 +101,21 @@ class _AllremindersPageState extends ConsumerState<AllremindersPage> {
                                 overflow: TextOverflow.fade,
                               ),
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child:
+                                  ref.read(
+                                            allRemindersProviders,
+                                          )[index]['Date'] ==
+                                          ""
+                                      ? SizedBox.shrink()
+                                      : Text(
+                                        ref.read(
+                                          allRemindersProviders,
+                                        )[index]['Date'],
+                                        overflow: TextOverflow.fade,
+                                      ),
+                            ),
                           ],
                         ),
                       ),

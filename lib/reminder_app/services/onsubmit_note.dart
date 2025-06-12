@@ -11,6 +11,7 @@ class OnsubmitNote {
     int id,
     BuildContext context,
     WidgetRef ref,
+    String date,
   ) async {
     try {
       if (title != '' && notes != '') {
@@ -19,6 +20,7 @@ class OnsubmitNote {
           'Titles': title,
           'Notes': notes,
           'isCompleted': false,
+          'Date': date,
         });
 
         ref.read(incompleteremindersProviders.notifier).addData({
@@ -26,6 +28,7 @@ class OnsubmitNote {
           'Titles': title,
           'Notes': notes,
           'isCompleted': false,
+          'Date': date,
         });
 
         if (context.mounted) Navigator.pop(context);
@@ -38,6 +41,7 @@ class OnsubmitNote {
               'Titles': title,
               'Notes': notes,
               'isCompleted': false,
+              'Date': date,
             });
       } else {
         if (context.mounted) Navigator.pop(context);
